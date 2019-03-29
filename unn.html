@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>API ADDRESSING</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    </head>
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+body{
+  background: #f2f2f2;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.search {
+  width: 100%;
+  position: relative
+}
+
+.searchTerm {
+  float: left;
+  width: 100%;
+  border: 3px solid #00B4CC;
+  padding: 5px;
+  height: 20px;
+  border-radius: 5px;
+  outline: none;
+  color: #9DBFAF;
+}
+
+.searchTerm:focus{
+  color: #00B4CC;
+}
+#REPOSITS{
+
+}
+.searchButton {
+  position: absolute;  
+  right: -50px;
+  width: 40px;
+  height: 36px;
+  border: 1px solid #00B4CC;
+  background: #00B4CC;
+  text-align: center;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+/*Resize the wrap to see the search bar change!*/
+.wrap{
+  width: 30%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+    </style>
+    <body>
+        <div class="wrap">
+            <div class="search">
+               <input type="text" class="searchTerm" id="usertext" placeholder="Enter the Username">
+               <button type="submit" class="searchButton" onclick="clickedf()">
+                 <i class="fa fa-search"></i>
+              </button>
+            </div>
+         </div>
+     <ul id="REPOSITS"><h1>REPOSITORY:</h1>
+    <li>
+
+    </li></ul>
+    </body>
+
+<script>
+
+function createNode(element) {
+      return document.createElement(element);
+  }
+
+function clickedf()
+{
+  var username= document.getElementById("usertext").value;
+  console.log(username);
+  return apical(username);
+}
+  
+  function append(parent, el) {
+    return parent.appendChild(el);
+  }
+
+function apical(username){
+  const ul = document.getElementById('REPOSITS');
+  let urld="https://api.github.com/users/"+`${username}`+"/repos";
+fetch(urld, { method: "GET"})
+.then(res => res.json())
+.then(function(data) {
+    console.log(data);
+    let reposs = data.map(a=> a.name); 
+    console.log(reposs);// Get the results
+    return reposs.map(function(rep) { // Map through the results and for each run the code below
+      let li = createNode('li'); //  Create the elements we need
+       let span=createNode('span');  
+      // Add the source of the image to be the src of the img element
+      span.innerHTML = `${rep}`; 
+      append(li, span);
+      append(ul, li);
+      
+
+    })
+  })
+
+  .catch(function(error) {
+    console.log(error);
+  });
+  
+}
+</script>
+</html>
+ return 
